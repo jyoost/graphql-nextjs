@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server-micro'
-import { DateTimeResolver } from 'graphql-scalars'
+import { DateTimeResolver, JSONResolver } from 'graphql-scalars'
 import { NextApiHandler } from 'next'
 import {
   asNexusMethod,
@@ -14,6 +14,7 @@ import cors from 'micro-cors'
 import prisma from '../../lib/prisma'
 
 export const GQLDate = asNexusMethod(DateTimeResolver, 'date')
+export const JSON = asNexusMethod(JSONResolver, 'json')
 
 const User = objectType({
   name: 'User',
@@ -172,7 +173,7 @@ const Mutation = objectType({
 })
 
 export const schema = makeSchema({
-  types: [Query, Mutation, Post, User, GQLDate],
+  types: [Query, Mutation, Post, User, GQLDate, JSON],
   outputs: {
     typegen: path.join(process.cwd(), 'generated/nexus-typegen.ts'),
     schema: path.join(process.cwd(), 'generated/schema.graphql'),
